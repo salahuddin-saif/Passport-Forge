@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+    <title>A4 Passport Image Printer · Pixel</title>
+    <!-- Font Awesome 6 (free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- ===== SKELETON OVERLAY ===== -->
+    <div id="skeletonWrapper">
+        <div class="skeleton-card">
+            <div class="skeleton-header">
+                <div class="skeleton-header-left">
+                    <div class="skeleton-icon shimmer"></div>
+                    <div class="skeleton-title shimmer"></div>
+                </div>
+                <div class="skeleton-header-right">
+                    <div class="skeleton-badge shimmer"></div>
+                    <div class="skeleton-toggle shimmer"></div>
+                </div>
+            </div>
+            <div class="skeleton-grid">
+                <div class="skeleton-upload-area">
+                    <div class="skeleton-dropzone">
+                        <div class="skeleton-icon-big shimmer"></div>
+                        <div class="skeleton-text shimmer"></div>
+                        <div class="skeleton-text-sm shimmer"></div>
+                    </div>
+                    <div class="skeleton-preview-img">
+                        <div class="skeleton-img-placeholder shimmer"></div>
+                    </div>
+                    <div class="skeleton-controls">
+                        <div class="skeleton-param-group">
+                            <div class="skeleton-param-row"><div class="skeleton-label shimmer"></div><div class="skeleton-input shimmer"></div></div>
+                            <div class="skeleton-param-row"><div class="skeleton-label shimmer"></div><div class="skeleton-input shimmer"></div></div>
+                            <div class="skeleton-param-row"><div class="skeleton-label shimmer"></div><div class="skeleton-input shimmer"></div></div>
+                        </div>
+                        <div class="skeleton-param-group">
+                            <div class="skeleton-param-row"><div class="skeleton-label shimmer"></div><div class="skeleton-input shimmer"></div></div>
+                            <div class="skeleton-param-row"><div class="skeleton-label shimmer"></div><div class="skeleton-input shimmer"></div></div>
+                            <div class="skeleton-param-row"><div class="skeleton-label shimmer"></div><div class="skeleton-input shimmer"></div></div>
+                            <div class="skeleton-param-row"><div class="skeleton-label shimmer"></div><div class="skeleton-input shimmer"></div></div>
+                            <div class="skeleton-param-row"><div class="skeleton-label shimmer"></div><div class="skeleton-input shimmer"></div></div>
+                            <div class="skeleton-param-row"><div class="skeleton-label shimmer"></div><div class="skeleton-input shimmer"></div></div>
+                        </div>
+                        <div class="skeleton-btn-group">
+                            <div class="skeleton-btn shimmer"></div>
+                            <div class="skeleton-btn shimmer"></div>
+                            <div class="skeleton-btn shimmer"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skeleton-preview-container">
+                    <div class="skeleton-preview-header">
+                        <div class="skeleton-badge-sm shimmer"></div>
+                        <div class="skeleton-badge-sm-right shimmer"></div>
+                    </div>
+                    <div class="skeleton-a4-preview">
+                        <div class="skeleton-img-item shimmer"></div>
+                        <div class="skeleton-img-item shimmer"></div>
+                        <div class="skeleton-img-item shimmer"></div>
+                        <div class="skeleton-img-item shimmer"></div>
+                        <div class="skeleton-img-item shimmer"></div>
+                    </div>
+                    <div class="skeleton-action-bar">
+                        <div class="skeleton-btn-sm shimmer"></div>
+                    </div>
+                    <div class="skeleton-footer">
+                        <div class="skeleton-footer-text shimmer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL / POPUP PREVIEW ===== -->
+    <div class="modal-overlay" id="previewModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-eye"></i> Final Preview</h2>
+                <button class="modal-close" id="closeModal"><i class="fas fa-times"></i> Close</button>
+            </div>
+            <div class="modal-image-wrapper">
+                <img id="modalPreviewImage" src="#" alt="Preview">
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" id="downloadFromModal"><i class="fas fa-download"></i> Download</button>
+                <button class="btn btn-outline" id="closeModalBtn"><i class="fas fa-times"></i> Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MAIN APP ===== -->
+    <div id="app">
+        <div class="card">
+            <div class="header">
+                <div class="header-left">
+                    <h1><i class="fas fa-id-card"></i> Passport Forge</h1>
+                    <span class="badge"><i class="fas fa-print"></i> A4 · px</span>
+                </div>
+                <div class="header-actions">
+                    <button class="dark-toggle" id="darkToggle"><i class="fas fa-moon"></i> <span id="darkLabel">Dark</span></button>
+                </div>
+            </div>
+
+            <div class="grid-2col">
+                <!-- LEFT: upload & controls -->
+                <div class="upload-area">
+                    <div class="dropzone" id="dropzone">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Drop image or click to browse</p>
+                        <span>JPG, PNG, WEBP</span>
+                        <input type="file" id="fileInput" accept="image/*">
+                    </div>
+                    <div class="preview-img-wrapper">
+                        <img id="uploadPreview" src="#" alt="preview" style="display: none;">
+                    </div>
+
+                    <div class="controls">
+                        <div class="param-group">
+                            <div class="param-row">
+                                <label><i class="fas fa-arrows-alt-h"></i> Width</label>
+                                <input type="number" id="imgWidth" value="170.8" step="0.5" min="10">
+                                <label style="min-width: 20px;">px</label>
+                            </div>
+                            <div class="param-row">
+                                <label><i class="fas fa-arrows-alt-v"></i> Height</label>
+                                <input type="number" id="imgHeight" value="208" step="0.5" min="10">
+                                <label style="min-width: 20px;">px</label>
+                            </div>
+                            <div class="param-row">
+                                <label><i class="fas fa-tag"></i> Preset</label>
+                                <select id="presetSelect">
+                                    <optgroup label="Bangladeshi Standards">
+                                        <option value="170.8,208" selected>🇧🇩 Passport (170.8x208px)</option>
+                                        <option value="170.8,208">🇧🇩 Visa (170.8x208px)</option>
+                                        <option value="150,200">🇧🇩 NID (150x200px)</option>
+                                        <option value="200,250">🇧🇩 Driving License (200x250px)</option>
+                                    </optgroup>
+                                    <optgroup label="International">
+                                        <option value="200,260">Passport (200x260px)</option>
+                                        <option value="150,210">Stamp (150x210px)</option>
+                                        <option value="230,290">Visa (230x290px)</option>
+                                        <option value="180,240">ID (180x240px)</option>
+                                        <option value="280,340">Large (280x340px)</option>
+                                        <option value="120,160">Small (120x160px)</option>
+                                        <option value="250,320">US Passport (250x320px)</option>
+                                        <option value="210,280">EU Passport (210x280px)</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="param-group">
+                            <div class="param-row">
+                                <label><i class="fas fa-copy"></i> Copies</label>
+                                <input type="number" id="copyCount" value="8" min="1" max="60" step="1">
+                            </div>
+                            <div class="param-row">
+                                <label><i class="fas fa-border-all"></i> Border</label>
+                                <input type="number" id="borderSize" value="4" step="1" min="0" max="30">
+                                <label style="min-width:20px;">px</label>
+                            </div>
+                            <div class="param-row">
+                                <label><i class="fas fa-arrows-alt-h"></i> Spacing</label>
+                                <input type="number" id="spacing" value="8" step="1" min="0" max="40">
+                                <label style="min-width:20px;">px</label>
+                            </div>
+                            <div class="param-row">
+                                <label><i class="fas fa-columns"></i> Columns</label>
+                                <input type="number" id="columnsCount" value="0" min="0" max="20" step="1">
+                                <label style="min-width:20px;">(0=auto)</label>
+                            </div>
+                            <div class="param-row">
+                                <label><i class="fas fa-file-alt"></i> Paper</label>
+                                <select id="paperSelect">
+                                    <option value="794,1123" selected>A4 (794x1123px)</option>
+                                    <option value="1123,1587">A3 (1123x1587px)</option>
+                                    <option value="595,842">A5 (595x842px)</option>
+                                    <option value="816,1054">Letter (816x1054px)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="param-group">
+                            <div class="param-row">
+                                <label><i class="fas fa-arrows-alt-v"></i> Top Margin</label>
+                                <input type="number" id="marginTop" value="20" step="1" min="0" max="200">
+                                <label style="min-width:20px;">px</label>
+                            </div>
+                            <div class="param-row">
+                                <label><i class="fas fa-arrows-alt-v"></i> Bottom Margin</label>
+                                <input type="number" id="marginBottom" value="20" step="1" min="0" max="200">
+                                <label style="min-width:20px;">px</label>
+                            </div>
+                            <div class="param-row">
+                                <label><i class="fas fa-arrows-alt-h"></i> Left Margin</label>
+                                <input type="number" id="marginLeft" value="20" step="1" min="0" max="200">
+                                <label style="min-width:20px;">px</label>
+                            </div>
+                            <div class="param-row">
+                                <label><i class="fas fa-arrows-alt-h"></i> Right Margin</label>
+                                <input type="number" id="marginRight" value="20" step="1" min="0" max="200">
+                                <label style="min-width:20px;">px</label>
+                            </div>
+                        </div>
+
+                        <div class="btn-group">
+                            <button class="btn btn-primary" id="applyBtn"><i class="fas fa-check-circle"></i> Apply</button>
+                            <button class="btn btn-outline" id="previewBtn"><i class="fas fa-eye"></i> Preview</button>
+                            <button class="btn btn-success" id="downloadBtn"><i class="fas fa-download"></i> Download</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT: preview -->
+                <div>
+                    <div id="previewContainer">
+                        <div style="display: flex; justify-content: space-between; width:100%; margin-bottom: 8px;">
+                            <span class="badge"><i class="far fa-image"></i> Sheet preview</span>
+                            <span class="badge" id="imageCountBadge">0 images</span>
+                        </div>
+                        <div id="a4Preview">
+                            <!-- dynamic content -->
+                        </div>
+                        <div class="action-bar">
+                            <button class="btn btn-outline" id="clearPreviewBtn" style="flex:0;"><i class="fas fa-undo-alt"></i> Clear</button>
+                        </div>
+                        <div class="footer-note">
+                            <i class="fas fa-arrows-alt"></i> Paper size · border & spacing in px
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
