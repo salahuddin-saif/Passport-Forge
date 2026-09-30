@@ -113,13 +113,13 @@
                 <div class="upload-area">
                     <div class="dropzone" id="dropzone">
                         <i class="fas fa-cloud-upload-alt"></i>
-                        <p>Drop image or click to browse</p>
-                        <span>JPG, PNG, WEBP</span>
-                        <input type="file" id="fileInput" accept="image/*">
+                        <p>Drop images or click to browse</p>
+                        <span>JPG, PNG, WEBP (multiple)</span>
+                        <input type="file" id="fileInput" accept="image/*" multiple>
                     </div>
-                    <div class="preview-img-wrapper">
-                        <img id="uploadPreview" src="#" alt="preview" style="display: none;">
-                    </div>
+
+                    <!-- Photo list container -->
+                    <div id="photoList" class="photo-list"></div>
 
                     <div class="controls">
                         <div class="param-group">
@@ -157,10 +157,6 @@
                         </div>
 
                         <div class="param-group">
-                            <div class="param-row">
-                                <label><i class="fas fa-copy"></i> Copies</label>
-                                <input type="number" id="copyCount" value="8" min="1" max="60" step="1">
-                            </div>
                             <div class="param-row">
                                 <label><i class="fas fa-border-all"></i> Border</label>
                                 <input type="number" id="borderSize" value="4" step="1" min="0" max="30">
