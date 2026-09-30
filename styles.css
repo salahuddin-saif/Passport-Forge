@@ -1,4 +1,4 @@
-/* styles.css */
+/* styles.css – updated with photo list styles */
 * {
     margin: 0;
     padding: 0;
@@ -447,6 +447,107 @@ body {
 .dropzone p { color: var(--text-secondary); font-weight: 500; }
 .dropzone span { color: var(--text-muted); font-size: 0.9rem; }
 #fileInput { display: none; }
+
+/* ---- PHOTO LIST ---- */
+.photo-list {
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 260px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+.photo-list:empty {
+    display: none;
+}
+.photo-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg-param);
+    border: 1px solid var(--border-param);
+    border-radius: 18px;
+    padding: 10px 12px;
+    transition: 0.2s;
+}
+.photo-item:hover {
+    border-color: var(--btn-primary-bg);
+    box-shadow: var(--shadow-soft);
+}
+.photo-item img {
+    width: 50px;
+    height: 62px;
+    object-fit: cover;
+    border-radius: 10px;
+    background: var(--preview-bg);
+    border: 1px solid var(--border-zone);
+    flex-shrink: 0;
+}
+.photo-item .photo-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+.photo-item .photo-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.photo-item .photo-copy-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.photo-item .photo-copy-row label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.photo-item .photo-copy-row input {
+    background: var(--bg-card);
+    border: 1px solid var(--border-param);
+    border-radius: 60px;
+    padding: 6px 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+    outline: none;
+    transition: 0.2s;
+    width: 70px;
+    font-size: 0.9rem;
+    text-align: center;
+}
+.photo-item .photo-copy-row input:focus {
+    border-color: var(--btn-primary-bg);
+    box-shadow: 0 0 0 3px rgba(42, 109, 170, 0.2);
+}
+.photo-item .remove-photo {
+    background: transparent;
+    border: 1px solid var(--border-param);
+    border-radius: 60px;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: 0.2s;
+    flex-shrink: 0;
+}
+.photo-item .remove-photo:hover {
+    background: #ff4d4d;
+    border-color: #ff4d4d;
+    color: white;
+}
 
 .preview-img-wrapper {
     margin-top: 18px;
